@@ -77,8 +77,6 @@ public/                   frontend (HTML, CSS, JS, images)
    ```
 7. Open http://localhost:3000 in your browser. Press `Ctrl + C` in the terminal to stop the server.
 
-On macOS or Linux, use `cp .env.example .env` and `mysql -u root -p < database.sql`.
-
 ## Environment variables
 
 All sensitive settings are loaded from a `.env` file using `require("dotenv").config()` in `config/db.js`. The source code only reads values such as `process.env.DB_PASSWORD` and `process.env.JWT_SECRET`; nothing sensitive is hardcoded. `.env` is listed in `.gitignore` and is never committed. `.env.example` documents every variable:
@@ -111,21 +109,6 @@ git add .
 git commit -m "Describe the change"
 git push
 ```
-
-## Deploy to the cloud (Railway example)
-
-1. Push the repository to GitHub (see above).
-2. In Railway, choose **New Project → Deploy from GitHub repo** and select this repository. Railway runs `npm install` and `npm start`.
-3. In the same project, click **New → Database → MySQL**.
-4. Open the web service's **Variables** tab and set `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` and `DB_NAME` from the MySQL service (Railway's variable references can fill these in). Also set `JWT_SECRET`, `ADMIN_PASSWORD`, and optionally `RESEND_API_KEY` and `EMAIL_FROM`. If the app reports an SSL error, add `DB_SSL=true`.
-5. Create the tables in the cloud database. From your own computer the internal Railway host is not reachable, so use the MySQL service's **public** connection details (host, port, user, password, database from its Connect tab):
-   - Temporarily put those values in your local `.env`.
-   - Run `npm run db:init` (it runs `database_cloud.sql`), then `npm run seed:admin`.
-   - Restore your normal local `.env` afterwards, and never commit it.
-6. In the web service, open **Settings → Networking → Generate Domain** and open the URL.
-7. **Continuous deployment:** every `git push` to `main` makes Railway rebuild and redeploy automatically.
-
-Note: GitHub Pages cannot run this app because it only hosts static files and cannot run Node.js or MySQL.
 
 ## Security measures
 
