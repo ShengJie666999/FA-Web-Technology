@@ -37,9 +37,15 @@ async function getHolidays(year) {
 async function estimateDelivery(businessDays = 3) {
   const d = new Date();
   const holidays = new Set();
-  for (const y of [d.getFullYear(), d.getFullYear() + 1]) {
-    (await getHolidays(y)).forEach(h => holidays.add(h.date));
+
+  for (const year of [d.getFullYear(), d.getFullYear() + 1]) {
+    try {
+      (await getHolidays(year)).forEach(h => holidays.add(h.date));
+    } catch (err) {
+      console.error(`Holiday lookup failed for ${year}:`, err.message);
+    }
   }
+
   let added = 0;
   while (added < businessDays) {
     d.setDate(d.getDate() + 1);
