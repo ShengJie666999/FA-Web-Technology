@@ -1,8 +1,6 @@
 -- ShopFlow schema for a cloud database (no CREATE DATABASE / USE / DROP).
 -- Create the tables with: npm run db:init
 
--- Drop in reverse-dependency order
-
 -- Users: passwords are stored as bcrypt hashes. New accounts default to 'customer'.
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
